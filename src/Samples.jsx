@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 const data = [
   { title: "首页", path: "/" },
   { title: "摄像头示例", path: "/camera" },
+  { title: "麦克风示例", path: "/microphone" },
+  { title: "截取视频示例", path: "/canvas" },
+  { title: "屏幕共享示例", path: "/screenShare" },
 ];
 
 class Samples extends React.Component {

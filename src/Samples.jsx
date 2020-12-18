@@ -2,7 +2,10 @@ import React from "react";
 import { List } from "antd";
 import { Link } from "react-router-dom";
 
-const data = [{ title: "Home Page", path: "/" }];
+const data = [
+  { title: "首页", path: "/" },
+  { title: "摄像头示例", path: "/camera" },
+];
 
 class Samples extends React.Component {
   render() {
@@ -11,7 +14,7 @@ class Samples extends React.Component {
         <List
           header={<div>WebRTC samples</div>}
           footer={<div>Footer</div>}
-          boardered
+          boardered="true"
           dataSource={data}
           renderItem={(item) => (
             <List.Item>

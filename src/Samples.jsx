@@ -10,6 +10,7 @@ const data = [
   { title: "屏幕共享示例", path: "/screenShare" },
   { title: "视频滤镜示例", path: "/videoFilter" },
   { title: "视频分辨率示例", path: "/resolution" },
+  { title: "音量检测示例", path: "/audioVolume" },
 ];
 
 class Samples extends React.Component {

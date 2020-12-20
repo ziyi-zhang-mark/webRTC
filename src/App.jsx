@@ -7,6 +7,7 @@ import Canvas from "./Canvas";
 import ScreenShare from "./ScreenShare";
 import VideoFilter from "./VideoFilter";
 import Resolution from "./Resolution";
+import AudioVolume from "./volume/AudioVolume";
 
 class App extends React.Component {
   render() {
@@ -20,6 +21,7 @@ class App extends React.Component {
           <Route exact path="/screenShare" component={ScreenShare} />
           <Route exact path="/videoFilter" component={VideoFilter} />
           <Route exact path="/resolution" component={Resolution} />
+          <Route exact path="/audioVolume" component={AudioVolume} />
         </div>
       </Router>
     );

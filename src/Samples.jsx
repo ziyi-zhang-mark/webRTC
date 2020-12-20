@@ -8,6 +8,8 @@ const data = [
   { title: "麦克风示例", path: "/microphone" },
   { title: "截取视频示例", path: "/canvas" },
   { title: "屏幕共享示例", path: "/screenShare" },
+  { title: "视频滤镜示例", path: "/videoFilter" },
+  { title: "视频分辨率示例", path: "/resolution" },
 ];
 
 class Samples extends React.Component {

@@ -11,6 +11,7 @@ const data = [
   { title: "视频滤镜示例", path: "/videoFilter" },
   { title: "视频分辨率示例", path: "/resolution" },
   { title: "音量检测示例", path: "/audioVolume" },
+  { title: "设备枚举示例", path: "/deviceSelect" },
 ];
 
 class Samples extends React.Component {

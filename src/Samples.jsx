@@ -13,6 +13,7 @@ const data = [
   { title: "音量检测示例", path: "/audioVolume" },
   { title: "设备枚举示例", path: "/deviceSelect" },
   { title: "设置综合示例", path: "/mediaSettings" },
+  { title: "mediaStreamAPI 测试", path: "/mediaStreamAPI" },
 ];
 
 class Samples extends React.Component {

@@ -10,6 +10,7 @@ import Resolution from "./Resolution";
 import AudioVolume from "./volume/AudioVolume";
 import DeviceSelect from "./DeviceSelect";
 import MediaSettings from "./media-settings/MediaSettings";
+import MediaStreamAPI from "./MediaStreamAPI";
 
 class App extends React.Component {
   render() {
@@ -26,6 +27,7 @@ class App extends React.Component {
           <Route exact path="/audioVolume" component={AudioVolume} />
           <Route exact path="/deviceSelect" component={DeviceSelect} />
           <Route exact path="/mediaSettings" component={MediaSettings} />
+          <Route exact path="/mediaStreamAPI" component={MediaStreamAPI} />
         </div>
       </Router>
     );

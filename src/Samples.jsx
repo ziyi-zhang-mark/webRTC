@@ -14,6 +14,7 @@ const data = [
   { title: "设备枚举示例", path: "/deviceSelect" },
   { title: "设置综合示例", path: "/mediaSettings" },
   { title: "mediaStreamAPI 测试", path: "/mediaStreamAPI" },
+  { title: "捕获Video作为MediaStream实例", path: "/captureVideo" },
 ];
 
 class Samples extends React.Component {

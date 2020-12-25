@@ -18,6 +18,7 @@ const data = [
   { title: "捕获Canvas作为MediaStream实例", path: "/captureCanvas" },
   { title: "录制音频示例", path: "/recordAudio" },
   { title: "录制视频示例", path: "/recordVideo" },
+  { title: "录制屏幕示例", path: "/recordScreen" },
 ];
 
 class Samples extends React.Component {

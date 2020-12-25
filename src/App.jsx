@@ -15,6 +15,7 @@ import CaptureVideo from "./CaptureVideo";
 import CaptureCanvas from "./CaptureCanvas";
 import RecordAudio from "./RecordAudio";
 import RecordVideo from "./RecordVideo";
+import RecordScreen from "./RecordScreen";
 
 class App extends React.Component {
   render() {
@@ -36,6 +37,7 @@ class App extends React.Component {
           <Route exact path="/captureCanvas" component={CaptureCanvas} />
           <Route exact path="/recordAudio" component={RecordAudio} />
           <Route exact path="/recordVideo" component={RecordVideo} />
+          <Route exact path="/recordScreen" component={RecordScreen} />
         </div>
       </Router>
     );

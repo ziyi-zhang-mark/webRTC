@@ -14,6 +14,7 @@ import MediaStreamAPI from "./MediaStreamAPI";
 import CaptureVideo from "./CaptureVideo";
 import CaptureCanvas from "./CaptureCanvas";
 import RecordAudio from "./RecordAudio";
+import RecordVideo from "./RecordVideo";
 
 class App extends React.Component {
   render() {
@@ -34,6 +35,7 @@ class App extends React.Component {
           <Route exact path="/captureVideo" component={CaptureVideo} />
           <Route exact path="/captureCanvas" component={CaptureCanvas} />
           <Route exact path="/recordAudio" component={RecordAudio} />
+          <Route exact path="/recordVideo" component={RecordVideo} />
         </div>
       </Router>
     );

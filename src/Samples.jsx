@@ -19,6 +19,7 @@ const data = [
   { title: "录制音频示例", path: "/recordAudio" },
   { title: "录制视频示例", path: "/recordVideo" },
   { title: "录制屏幕示例", path: "/recordScreen" },
+  { title: "录制Canvas示例", path: "/recordCanvas" },
 ];
 
 class Samples extends React.Component {

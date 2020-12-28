@@ -19,6 +19,7 @@ import RecordScreen from "./RecordScreen";
 import RecordCanvas from "./RecordCanvas";
 import PeerConnection from "./PeerConnection";
 import PeerConnectionVideo from "./PeerConnectionVideo";
+import PeerConnectionCanvas from "./PeerConnectionCanvas";
 
 class App extends React.Component {
   render() {
@@ -47,6 +48,11 @@ class App extends React.Component {
             exact
             path="/peerConnectionVideo"
             component={PeerConnectionVideo}
+          />
+          <Route
+            exact
+            path="/peerConnectionCanvas"
+            component={PeerConnectionCanvas}
           />
         </div>
       </Router>

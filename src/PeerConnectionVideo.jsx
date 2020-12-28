@@ -9,42 +9,16 @@ let peerConnectionA;
 // remote
 let peerConnectionB;
 
-class PeerConnection extends React.Component {
+class PeerConnectionVideo extends React.Component {
+  canPlay = () => {
+    const fps = 0;
+    localStream = localVideo.captureStream(fps);
+  };
+
   componentDidMount() {
     localVideo = this.refs["localVideo"];
     remoteVideo = this.refs["remoteVideo"];
-
-    localVideo.addEventListener("loadedmetadata", () => {
-      console.log(
-        "localVideo: " + localVideo.videoWidth + " " + localVideo.videoHeight
-      );
-    });
-
-    remoteVideo.addEventListener("loadedmetadata", () => {
-      console.log(
-        "remoteVideo: " + remoteVideo.videoWidth + " " + remoteVideo.videoHeight
-      );
-    });
-
-    remoteVideo.addEventListener("resize", () => {
-      console.log(
-        "remoteVideo: " + remoteVideo.videoWidth + " " + remoteVideo.videoHeight
-      );
-    });
   }
-
-  start = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: true,
-      });
-      localVideo.srcObject = stream;
-      localStream = stream;
-    } catch (e) {
-      console.log("getUserMedia错误: ", e);
-    }
-  };
 
   call = async () => {
     // 视频轨道
@@ -242,15 +216,26 @@ class PeerConnection extends React.Component {
         <h1>
           <span>示例</span>
         </h1>
-        <video ref="localVideo" autoPlay playsInline muted></video>
-        <video ref="remoteVideo" autoPlay playsInline controls></video>
+        <video
+          ref="localVideo"
+          controls
+          loop
+          muted
+          playsInline
+          onCanPlay={this.canPlay}
+        >
+          <source src="./assets/webrtc.mp4" type="video/mp4"></source>
+        </video>
 
-        <Button onClick={this.start}>开始</Button>
-        <Button onClick={this.call}>呼叫</Button>
-        <Button onClick={this.hangup}>挂断</Button>
+        <video ref="remoteVideo" playsInline autoPlay></video>
+
+        <div>
+          <Button onClick={this.call}>呼叫</Button>
+          <Button onClick={this.hangup}>挂断</Button>
+        </div>
       </div>
     );
   }
 }
 
-export default PeerConnection;
+export default PeerConnectionVideo;

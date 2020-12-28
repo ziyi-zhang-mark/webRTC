@@ -23,6 +23,7 @@ const data = [
   { title: "RTC Peer Connection示例", path: "/peerConnection" },
   { title: "Video 发送至远端示例", path: "/peerConnectionVideo" },
   { title: "电子白板同步示例", path: "/peerConnectionCanvas" },
+  { title: "数据通道示例", path: "/dataChannel" },
 ];
 
 class Samples extends React.Component {

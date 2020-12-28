@@ -5,9 +5,9 @@ let localVideo;
 let remoteVideo;
 let localStream;
 // local
-let peerConnectionA;
+let localConnection;
 // remote
-let peerConnectionB;
+let remoteConnection;
 
 class PeerConnection extends React.Component {
   componentDidMount() {
@@ -65,31 +65,34 @@ class PeerConnection extends React.Component {
       iceServers: [{ url: "stun:stun.l.google.com:19302" }],
     };
 
-    peerConnectionA = new RTCPeerConnection(configuration);
-    peerConnectionA.addEventListener("icecandidate", this.onIceCandidateA);
+    localConnection = new RTCPeerConnection(configuration);
+    localConnection.addEventListener("icecandidate", this.onLocalIceCandidate);
 
-    peerConnectionB = new RTCPeerConnection(configuration);
-    peerConnectionB.addEventListener("icecandidate", this.onIceCandidateB);
-
-    peerConnectionA.addEventListener(
-      "iceconnectionstatechange",
-      this.onIceStateChangeA
-    );
-    peerConnectionB.addEventListener(
-      "iceconnectionstatechange",
-      this.onIceStateChangeB
+    remoteConnection = new RTCPeerConnection(configuration);
+    remoteConnection.addEventListener(
+      "icecandidate",
+      this.onRemoteIceCandidate
     );
 
-    peerConnectionB.addEventListener("track", this.gotRemoteStream);
+    localConnection.addEventListener(
+      "iceconnectionstatechange",
+      this.onLocalIceStateChange
+    );
+    remoteConnection.addEventListener(
+      "iceconnectionstatechange",
+      this.onRemoteIceStateChange
+    );
+
+    remoteConnection.addEventListener("track", this.gotRemoteStream);
 
     // A 将stream/track 加到 PCA 里
     localStream.getTracks().forEach((track) => {
-      peerConnectionA.addTrack(track, localStream);
+      localConnection.addTrack(track, localStream);
     });
 
     // offer
     try {
-      const offer = await peerConnectionA.createOffer();
+      const offer = await localConnection.createOffer();
       await this.onCreateOfferSuccess(offer);
     } catch (e) {
       this.onCreateSessionDescriptionError(e);
@@ -97,26 +100,26 @@ class PeerConnection extends React.Component {
   };
 
   onCreateOfferSuccess = async (desc) => {
-    console.log(`peerConnectionA 创建 offer 返回的SDP信息`);
+    console.log(`localConnection 创建 offer 返回的SDP信息`);
     console.log(desc.sdp);
-    console.log("设置 peerConnectionA 的本地描述 start");
+    console.log("设置 localConnection 的本地描述 start");
 
     try {
-      await peerConnectionA.setLocalDescription(desc);
-      this.onSetLocalSuccess(peerConnectionA);
+      await localConnection.setLocalDescription(desc);
+      this.onSetLocalSuccess(localConnection);
     } catch (e) {
       this.onSetSessionDescriptionError(e);
     }
 
     try {
-      await peerConnectionB.setRemoteDescription(desc);
-      this.onSetRemoteSuccess(peerConnectionB);
+      await remoteConnection.setRemoteDescription(desc);
+      this.onSetRemoteSuccess(remoteConnection);
     } catch (e) {
       this.onSetSessionDescriptionError(e);
     }
 
     try {
-      const answer = await peerConnectionB.createAnswer();
+      const answer = await remoteConnection.createAnswer();
       this.onCreateAnswerSuccess(answer);
     } catch (e) {
       this.onCreateSessionDescriptionError(e);
@@ -132,7 +135,7 @@ class PeerConnection extends React.Component {
   };
 
   getName = (pc) => {
-    return pc === peerConnectionA ? "peerConnectionA" : "peerConnectionB";
+    return pc === localConnection ? "localConnection" : "remoteConnection";
   };
 
   onCreateSessionDescriptionError = (error) => {
@@ -144,47 +147,47 @@ class PeerConnection extends React.Component {
   };
 
   onCreateAnswerSuccess = async (desc) => {
-    console.log(`peerConnectionB 的应答 Answer 数据`);
+    console.log(`remoteConnection 的应答 Answer 数据`);
     console.log(desc.sdp);
-    console.log(`peerConnectionB 设置本地描述开始`);
+    console.log(`remoteConnection 设置本地描述开始`);
     try {
-      await peerConnectionB.setLocalDescription(desc);
-      this.onSetLocalSuccess(peerConnectionB);
+      await remoteConnection.setLocalDescription(desc);
+      this.onSetLocalSuccess(remoteConnection);
     } catch (e) {
       this.onSetSessionDescriptionError(e);
     }
 
     try {
-      await peerConnectionA.setRemoteDescription(desc);
-      this.onSetRemoteSuccess(peerConnectionA);
+      await localConnection.setRemoteDescription(desc);
+      this.onSetRemoteSuccess(localConnection);
     } catch (e) {
       this.onSetSessionDescriptionError(e);
     }
   };
 
-  onIceStateChangeA = (event) => {
+  onLocalIceStateChange = (event) => {
     console.log(
-      `peerConnectionA 连接的ICE状态: ${peerConnectionA.iceConnectionState}`
+      `localConnection 连接的ICE状态: ${localConnection.iceConnectionState}`
     );
     console.log("ICE 状态改变事件: ", event);
   };
 
-  onIceStateChangeB = (event) => {
+  onRemoteIceStateChange = (event) => {
     console.log(
-      `peerConnectionB 连接的ICE状态: ${peerConnectionB.iceConnectionState}`
+      `remoteConnection 连接的ICE状态: ${remoteConnection.iceConnectionState}`
     );
     console.log("ICE 状态改变事件: ", event);
   };
 
-  onIceCandidateA = async (event) => {
+  onLocalIceCandidate = async (event) => {
     try {
       if (event.candidate) {
         // A 收到 candidate 信息, 发给B
-        await peerConnectionB.addIceCandidate(event.candidate);
-        this.onAddIceCandidateSuccess(peerConnectionB);
+        await remoteConnection.addIceCandidate(event.candidate);
+        this.onAddIceCandidateSuccess(remoteConnection);
       }
     } catch (e) {
-      this.onAddIceCandidateError(peerConnectionA, e);
+      this.onAddIceCandidateError(localConnection, e);
     }
 
     console.log(
@@ -194,15 +197,15 @@ class PeerConnection extends React.Component {
     );
   };
 
-  onIceCandidateB = async (event) => {
+  onRemoteIceCandidate = async (event) => {
     try {
       if (event.candidate) {
         // B 收到 candidate 信息, 发给A
-        await peerConnectionA.addIceCandidate(event.candidate);
-        this.onAddIceCandidateSuccess(peerConnectionA);
+        await localConnection.addIceCandidate(event.candidate);
+        this.onAddIceCandidateSuccess(localConnection);
       }
     } catch (e) {
-      this.onAddIceCandidateError(peerConnectionB, e);
+      this.onAddIceCandidateError(remoteConnection, e);
     }
 
     console.log(
@@ -230,10 +233,10 @@ class PeerConnection extends React.Component {
 
   hangup = () => {
     console.log("会话结束");
-    peerConnectionA.close();
-    peerConnectionB.close();
-    peerConnectionA = null;
-    peerConnectionB = null;
+    localConnection.close();
+    remoteConnection.close();
+    localConnection = null;
+    remoteConnection = null;
   };
 
   render() {

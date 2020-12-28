@@ -20,6 +20,7 @@ import RecordCanvas from "./RecordCanvas";
 import PeerConnection from "./PeerConnection";
 import PeerConnectionVideo from "./PeerConnectionVideo";
 import PeerConnectionCanvas from "./PeerConnectionCanvas";
+import DataChannel from "./DataChannel";
 
 class App extends React.Component {
   render() {
@@ -54,6 +55,7 @@ class App extends React.Component {
             path="/peerConnectionCanvas"
             component={PeerConnectionCanvas}
           />
+          <Route exact path="/dataChannel" component={DataChannel} />
         </div>
       </Router>
     );

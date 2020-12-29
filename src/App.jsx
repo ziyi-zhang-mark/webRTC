@@ -21,6 +21,7 @@ import PeerConnection from "./PeerConnection";
 import PeerConnectionVideo from "./PeerConnectionVideo";
 import PeerConnectionCanvas from "./PeerConnectionCanvas";
 import DataChannel from "./DataChannel";
+import DataChannelFile from "./DataChannelFile";
 
 class App extends React.Component {
   render() {
@@ -56,6 +57,7 @@ class App extends React.Component {
             component={PeerConnectionCanvas}
           />
           <Route exact path="/dataChannel" component={DataChannel} />
+          <Route exact path="/dataChannelFile" component={DataChannelFile} />
         </div>
       </Router>
     );

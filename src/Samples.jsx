@@ -24,6 +24,7 @@ const data = [
   { title: "Video 发送至远端示例", path: "/peerConnectionVideo" },
   { title: "电子白板同步示例", path: "/peerConnectionCanvas" },
   { title: "数据通道示例", path: "/dataChannel" },
+  { title: "数据通道文件发送示例", path: "/dataChannelFile" },
 ];
 
 class Samples extends React.Component {
